@@ -13,7 +13,11 @@ int main(void)
 {
 	TCHAR buff[MAX_PATH * 2];
 	buff[0] = 0;
-	GetSystemWindowsDirectory(buff, sizeof(buff));
+
+	if (GetSystemWindowsDirectory(buff, sizeof(buff)) == 0) {
+		printf("GetSystemWindowsDirectory error %d", GetLastError());
+		return 1;
+	}
 
 	wstring windows(&buff[0]);
 	wcout << L"Your path: " << windows + L"\\*" << endl;
